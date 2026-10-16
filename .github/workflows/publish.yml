@@ -1,0 +1,81 @@
+name: Publish laborima.github.io
+
+# The page itself lives in laborima/chatel-apps-repository (about-matthieu/site): this
+# repository only builds it at the root of laborima.github.io, with the root files
+# (robots.txt, sitemap.xml, llms.txt) that crawlers only read at the top of the domain.
+# chatel-apps-repository cannot trigger this workflow without a secret, so an hourly
+# run picks up its changes, and skips the build when nothing has changed.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Checkout the page source
+        uses: actions/checkout@v4
+        with:
+          repository: laborima/chatel-apps-repository
+          ref: master
+          path: source
+
+      - name: Decide whether to build
+        id: check
+        run: |
+          BUILD_ID="$(git rev-parse HEAD) $(git -C source log -1 --format=%H -- about-matthieu/site)"
+          echo "id=${BUILD_ID}" >> "$GITHUB_OUTPUT"
+          LIVE=$(curl -fsS https://laborima.github.io/build-id.txt 2>/dev/null || true)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${LIVE}" = "${BUILD_ID}" ]; then
+            echo "Already published: ${BUILD_ID}"
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node.js
+        if: steps.check.outputs.build == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ./source/about-matthieu/site/package-lock.json
+
+      - name: Build the page
+        if: steps.check.outputs.build == 'true'
+        working-directory: ./source/about-matthieu/site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Assemble the site
+        if: steps.check.outputs.build == 'true'
+        run: |
+          mkdir site
+          cp -r source/about-matthieu/site/dist/. site/
+          cp -r root/. site/
+          sed -i "s/@DATE@/$(date -u +%F)/" site/sitemap.xml
+          echo "${{ steps.check.outputs.id }}" > site/build-id.txt
+          touch site/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        if: steps.check.outputs.build == 'true'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
