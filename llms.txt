@@ -1,6 +1,6 @@
 # Matthieu Laborie
 
-> Developer and sailor in La Rochelle, France; author of Ocearo, the open-source 3D sailing display for Signal K. This page (in French) presents his projects between the sea, electronics and code, and Ride, a windsurf and wing foil game playable in the browser.
+> Developer and sailor in La Rochelle, France; author of Ocearo, the open-source 3D sailing display for Signal K. This page (French, English and Brazilian Portuguese) presents his projects between the sea, electronics and code, and Ride, a windsurf and wing foil game playable in the browser.
 
 ## Projects
 
@@ -11,6 +11,7 @@
 
 ## Links
 
-- [About page](https://laborima.github.io/) (French) · [Ride, the game](https://laborima.github.io/#windsurf)
+- [About page](https://laborima.github.io/) · [Ride, the game](https://laborima.github.io/#windsurf)
 - [LinkedIn](https://www.linkedin.com/in/matthieu-laborie-2433b546)
 - [GitHub](https://github.com/laborima)
+- Contact: ocearo@leslaborie.org
