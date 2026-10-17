@@ -4,7 +4,7 @@
 
 ## Projects
 
-- [Ocearo](https://laborima.github.io/ocearo-ui/): open-source 3D sailing display for Signal K — the boat, AIS traffic, laylines, seabed, weather and tide in one live 3D view; Ocearo Core adds collision and anchor watch, spoken alerts and sail coaching ([llms.txt](https://laborima.github.io/ocearo-ui/llms.txt))
+- [Ocearo](https://ocearo.leslaborie.org/): open-source 3D sailing display for Signal K — the boat, AIS traffic, laylines, seabed, weather and tide in one live 3D view; Ocearo Core adds collision and anchor watch, spoken alerts and sail coaching ([llms.txt](https://ocearo.leslaborie.org/llms.txt))
 - [GridViewer](https://github.com/laborima/gridviewer): viewer for ocean and climate grids larger than memory — maps, vertical sections, 3D globe; a 2006 Mercator Océan program brought back to life
 - [Châtel Windsurf](https://laborima.github.io/chatel-apps-repository/): wind, weather and tide forecast for windsurfing at Châtelaillon-Plage, with a Signal K weather plugin
 - [Other apps and Signal K sensors](https://github.com/laborima/chatel-apps-repository)
