@@ -3,4 +3,4 @@ Allow: /
 Disallow: /ocearo-ui/app/
 
 Sitemap: https://laborima.github.io/sitemap.xml
-Sitemap: https://laborima.github.io/ocearo-ui/sitemap.xml
+Sitemap: https://ocearo.leslaborie.org/sitemap.xml
